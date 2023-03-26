@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="cityInput" placeholder="Enter city name">
+    <button onclick="getWeather()">Get Weather</button>
+    <div id="result"></div>
+
+    <script>
+        function getWeather() {
+            // Get the city name from the input field
+            const city = document.getElementById("cityInput").value;
+
+            // Fetch weather data from OpenWeatherMap API
+        let data =   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=05c6e452699cf914c31d1b6dac482de4&units=metric`)
+                .then(response => response.json())
+                // 
+                .then(data => {
+                    // Extract the weather information
+                    const temperature = data.main.temp;
+                    const weatherDescription = data.weather[0].description;
+
+                    // Display the weather information in the result div
+                    const resultDiv = document.getElementById("result");
+                    resultDiv.innerHTML = `The temperature in ${city} is ${temperature}°C with ${weatherDescription}`;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Could not fetch weather data. Please try again.');
+                });
+                console.log(data);
+        }
+        // console.log(data);
+    </script>
+</body>
+
+</html>

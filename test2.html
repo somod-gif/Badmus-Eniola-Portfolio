@@ -1,48 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<link rel="stylesheet" href="./bootstrap-5.2.2-dist/css/bootstrap.min.css">
+<script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+
 <body>
-    <div id="typing-text"></div>
-
+    <main>
+        <form>
+            <input class="form-control-sm" placeholder="fullname" id="fullname" type="text"> <br>
+            <br>
+            <input class="form-control-sm" placeholder="email" id="email" type="email"> <br>
+            <br>
+            <input class="form-control-sm" placeholder="Phone Number" id="phonenumber" type="number"> <br>
+            <br>
+            <textarea class="form-control-sm" name="" id="message" cols="30" rows="10" placeholder="Enter Message here"></textarea> <br>
+            <br>
+            <button class="form-control-sm" type="button" onclick="send()">Submit</button>
+        </form>
+    </main>
 </body>
-</html>
 <script>
-        const typingText = document.getElementById('typing-text');
-        const words = ["Frontend Developer", "Student" ,"Freelancer"];
-        let wordIndex = 0;
-        let letterIndex = 0;
-        let isDeleting = false;
+    // Initialize EmailJS with your User ID
+    emailjs.init('atjdD32HXw-4Kbqzd');
 
-        function type() {
-            const currentWord = words[wordIndex];
-            const currentText = currentWord.substring(0, letterIndex);
+    // Function to send the email
+    function send() {
+        // Get the form data
+        const formData = {
+            fullname: document.getElementById('fullname').value,
+            email: document.getElementById('email').value,
+            phonenumber: document.getElementById('phonenumber').value,
+            message: document.getElementById('message').value
+        };
 
-            if (isDeleting) {
-                typingText.innerHTML = currentText.slice(0, -1);
-                letterIndex--;
-            } 
-            else {
-                typingText.innerHTML = currentText + currentWord.charAt(letterIndex);
-                letterIndex++;
-            }
-
-            if (letterIndex == currentWord.length) {
-                isDeleting = true;
-            }
-
-            if (letterIndex == 0 && isDeleting) {
-                isDeleting = false;
-                wordIndex = (wordIndex + 1) % words.length;
-            }
-        }
-
-        setInterval(type, 200);
-        // const word = "Developer";
-        // console.log(word.charAt());
+        // Send the email using EmailJS
+        // emailjs.send("service_kb5lwaq", "template_lc74xza");
+        emailjs.send('service_kb5lwaq', 'template_lc74xza', formData)
+            .then(function (response) {
+                console.log('SUCCESS!', response.status, response.text);
+                alert('SUCCESS!');
+            }, function (error) {
+                console.log('FAILED...', error);
+                alert('FAILED...');
+            });
+    }
 
 </script>
+
+</html>
