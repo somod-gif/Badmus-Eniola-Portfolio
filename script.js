@@ -29,7 +29,32 @@ const typingtext = document.getElementById("typingtext");
         }
 // fh9qe
 // *312*4*3*3#
-        setInterval(type, 250);
+setInterval(type, 250);
+        // Initialize EmailJS with your User ID
+    emailjs.init('atjdD32HXw-4Kbqzd');
+
+    // Function to send the email
+    function send() {
+        // Get the form data
+        const formData = {
+            fullname: document.getElementById('fullname').value,
+            email: document.getElementById('email').value,
+            phonenumber: document.getElementById('phonenumber').value,
+            message: document.getElementById('message').value
+        };
+
+        // Send the email using EmailJS
+        // emailjs.send("service_kb5lwaq", "template_lc74xza");
+        emailjs.send('service_kb5lwaq', 'template_lc74xza', formData)
+            .then(function (response) {
+                console.log('SUCCESS!', response.status, response.text);
+                alert('SUCCESS!');
+            }, function (error) {
+                console.log('FAILED...', error);
+                // alert('FAILED...');
+            });
+        // window.location.href = "./index.html"
+    }
 function dm() {
     if (document.body.style.backgroundColor == "black") {
       document.body.style.backgroundColor = "white";
